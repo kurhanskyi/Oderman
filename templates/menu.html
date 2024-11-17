@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Меню - Oderman Піцерія{% endblock %}
+
+{% block content %}
+    <h1>Меню Oderman Піцерія</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <a href="{{ url_for('menu', sort='name', reverse='true' if current_sort == 'name' and not reverse else 'false') }}">
+                        Назва піци
+                        {% if current_sort == 'name' %}
+                            {% if reverse %}↓{% else %}↑{% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+                <th>Інгредієнти</th>
+                <th>
+                    <a href="{{ url_for('menu', sort='price', reverse='true' if current_sort == 'price' and not reverse else 'false') }}">
+                        Ціна
+                        {% if current_sort == 'price' %}
+                            {% if reverse %}↓{% else %}↑{% endif %}
+                        {% endif %}
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pizza in pizzas %}
+            <tr>
+                <td>{{ pizza.name }}</td>
+                <td>{{ pizza.ingredients }}</td>
+                <td>{{ pizza.price }} грн</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="buttons-container">
+        <a href="{{ url_for('home') }}" class="home-button">На головну</a>
+        <a href="{{ url_for('admin') }}" class="admin-button">Панель адміна</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Адмін-панель - Oderman Піцерія{% endblock %}
+
+{% block content %}
+    <div class="admin-container">
+        <h1>Адміністрування меню</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="admin-form">
+            <div class="form-group">
+                <label for="name">Назва піци:</label>
+                <input type="text" id="name" name="name" required class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="ingredients">Інгредієнти:</label>
+                <textarea id="ingredients" name="ingredients" required class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Ціна (грн):</label>
+                <input type="number" id="price" name="price" required class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Додати піцу</button>
+        </form>
+
+        <h2>Поточне меню</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Назва</th>
+                    <th>Інгредієнти</th>
+                    <th>Ціна</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pizza in pizzas %}
+                <tr>
+                    <td>{{ pizza.name }}</td>
+                    <td>{{ pizza.ingredients }}</td>
+                    <td>{{ pizza.price }} грн</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">На головну</a>
+    </div>
+{% endblock %}

@@ -1,43 +1,39 @@
 {% extends "base.html" %}
-
-{% block title %}Меню - Oderman Піцерія{% endblock %}
-
 {% block content %}
-    <h1>Меню Oderman Піцерія</h1>
-    <table>
+<div class="container">
+    <h1>Меню піцерії</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <table class="menu-table">
         <thead>
             <tr>
-                <th>
-                    <a href="{{ url_for('menu', sort='name', reverse='true' if current_sort == 'name' and not reverse else 'false') }}">
-                        Назва піци
-                        {% if current_sort == 'name' %}
-                            {% if reverse %}↓{% else %}↑{% endif %}
-                        {% endif %}
-                    </a>
-                </th>
+                <th>Назва піци</th>
                 <th>Інгредієнти</th>
-                <th>
-                    <a href="{{ url_for('menu', sort='price', reverse='true' if current_sort == 'price' and not reverse else 'false') }}">
-                        Ціна
-                        {% if current_sort == 'price' %}
-                            {% if reverse %}↓{% else %}↑{% endif %}
-                        {% endif %}
-                    </a>
-                </th>
+                <th>Ціна</th>
+                <th>Дії</th>
             </tr>
         </thead>
         <tbody>
-            {% for pizza in pizzas %}
+            {% for item in items %}
             <tr>
-                <td>{{ pizza.name }}</td>
-                <td>{{ pizza.ingredients }}</td>
-                <td>{{ pizza.price }} грн</td>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td>{{ item[3] }} грн</td>
+                <td>
+                    <a href="{{ url_for('order', pizza_id=item[0]) }}" class="order-btn">Замовити</a>
+                    <a href="{{ url_for('edit', id=item[0]) }}" class="edit-btn">Редагувати</a>
+                    <a href="{{ url_for('delete', id=item[0]) }}" class="delete-btn" onclick="return confirm('Ви впевнені?')">Видалити</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <div class="buttons-container">
-        <a href="{{ url_for('home') }}" class="home-button">На головну</a>
-        <a href="{{ url_for('admin') }}" class="admin-button">Панель адміна</a>
-    </div>
+</div>
 {% endblock %}

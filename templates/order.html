@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Замовлення піци</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="order-details">
+        <h2>{{ pizza[1] }}</h2>
+        <p class="pizza-description">{{ pizza[2] }}</p>
+        <p class="pizza-price">Ціна: {{ pizza[3] }} грн</p>
+    </div>
+
+    <form method="POST" class="order-form">
+        <div class="form-group">
+            <label for="customer_name">Ваше ім'я:</label>
+            <input type="text" id="customer_name" name="customer_name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Номер телефону:</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]+" required>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Адреса доставки:</label>
+            <textarea id="address" name="address" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Кількість:</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+        </div>
+
+        <button type="submit">Замовити</button>
+    </form>
+</div>
+{% endblock %}

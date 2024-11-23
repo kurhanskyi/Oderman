@@ -1,13 +1,17 @@
 {% extends "base.html" %}
-
-{% block title %}Головна - Oderman Піцерія{% endblock %}
-
 {% block content %}
-    <h1>Oderman Піцерія</h1>
-    <img src="{{ url_for('static', filename='pizza.jpg') }}" alt="Піца" class="main-image">
-    <h2>МЕНЮ</h2>
-    <div class="buttons-container">
-        <a href="{{ url_for('menu') }}" class="menu-button">Переглянути меню</a>
-        <a href="{{ url_for('admin') }}" class="admin-button">Панель адміна</a>
+<div class="container">
+    <h1>Ласкаво просимо до Oderman</h1>
+
+    <div class="weather-widget">
+        <h3>Погода в Києві</h3>
+        <p class="temperature">{{ weather.temperature }}°C</p>
+        <p class="weather-desc">{{ weather.description }}</p>
+        <p class="recommendation">{{ weather.recommendation }}</p>
     </div>
+
+    <img src="{{ url_for('static', filename='pizza.jpg') }}" alt="Піцерія Oderman">
+    <h2>МЕНЮ</h2>
+    <a href="{{ url_for('menu') }}" class="menu-button">Переглянути меню</a>
+</div>
 {% endblock %}
